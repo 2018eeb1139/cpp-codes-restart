@@ -42,41 +42,38 @@ int main()
     cout << mx << endl;
 }
 
-void dfs(int node, vector<int> adj[], vector<bool> &vis, vector<int> &subtree, vector<int> &weight)
+// accepted
+const int M = 1e9 + 7;
+
+void dfs(int node, int par, vector<int> adj[], vector<int> &subtree_sum, vector<int> &val)
 {
-    vis[node] = true;
-    subtree[node] += weight[node - 1];
-    for (int &child : adj[node])
-    {
-        if (!vis[child])
+    subtree_sum[node] += val[node-1;
+    for(int child : adj[node]){
+        if (child != par)
         {
-            dfs(child, adj, vis, subtree, weight);
-            subtree[node] += subtree[child];
+            dfs(child, node, adj, subtree_sum, val);
+            subtree_sum[node] += subtree_sum[child];
         }
     }
 }
 
-int Solution::deleteEdge(vector<int> &weight, vector<vector<int>> &edges)
+int Solution::deleteEdge(vector<int> &A, vector<vector<int>> &B)
 {
-    int V = weight.size();
-    vector<int> adj[V + 1];
-    vector<bool> vis(V + 1, false);
-    vector<int> subtree(V + 1, 0);
-    for (int i = 0; i < edges.size(); i++)
+    vector<int> adj[A.size() + 1];
+    vector<int> subtree_sum(A.size() + 1, 0);
+    for (auto edge : B)
     {
-        int x = edges[i][0];
-        int y = edges[i][1];
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        adj[edge[0]].push_back(edge[1]);
+        adj[edge[1]].push_back(edge[0]);
     }
-    dfs(1, adj, vis, subtree, weight);
-    long long mx = INT_MIN;
-    for (int i = 2; i <= V; i++)
+    long long ans = 0;
+    int n = A.size();
+    dfs(1, 0, adj, subtree_sum, A);
+    for (int i = 2; i <= n; i++)
     {
-        long long part1 = subtree[i];
-        long long part2 = subtree[1] - part1;
-        long long ans = (part1 * 1LL * part2) % M;
-        mx = max(mx, ans);
+        int part1 = subtree_sum[i];
+        int part2 = subtree_sum[1] - part1;
+        ans = max(ans, part1 * 1LL * part2);
     }
-    return mx;
+    return (ans % M);
 }

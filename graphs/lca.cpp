@@ -37,7 +37,7 @@ int main()
         adj[x].push_back(y);
         adj[y].push_back(x);
     }
-    vector<int> par(V + 1);
+    vector<int> par(V + 1, 0);
     dfs(1, -1, adj, par);
     //    for(int i=1;i<=V;i++){
     //        cout<<i<<" "<<par[i]<<endl;
