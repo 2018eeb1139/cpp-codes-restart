@@ -52,7 +52,7 @@ void printLCS()
     int i = s1.size();
     int j = s2.size();
     string res = "";
-    while (i > 0 || j > 0)
+    while (i > 0 && j > 0)
     {
         if (s1[i - 1] == s2[j - 1])
         {
