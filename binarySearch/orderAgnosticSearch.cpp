@@ -48,6 +48,7 @@ int reverseBinarySearch(vector<int> &arr, int target)
 int main()
 {
     vector<int> arr = {9, 6, 4, 2, 1};
+    // order of the array is not known whether is is sorted in increasing order or decreasing.
     int target = 4;
     if (arr[0] < arr[1])
     {

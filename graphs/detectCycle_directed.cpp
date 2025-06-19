@@ -6,7 +6,7 @@ bool dfs(int node, vector<int> adj[], vector<bool> &vis, vector<int> &curr_path)
 {
     vis[node] = true;
     curr_path[node] = 1;
-    for (int child : adj[node])
+    for (int &child : adj[node])
     {
         if (!vis[child])
         {
