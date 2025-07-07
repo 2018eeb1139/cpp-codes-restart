@@ -9,7 +9,7 @@ bool isValid(int i, int j, int X, int Y)
 string Solution::solve(int X, int Y, int N, int R, vector<int> &A, vector<int> &B)
 {
     vector<vector<bool>> mat(X + 1, vector<bool>(Y + 1));
-
+    // check every point in rectangle is inside in every circle if yes
     for (int i = 0; i <= X; i++)
     {
         for (int j = 0; j <= Y; j++)
