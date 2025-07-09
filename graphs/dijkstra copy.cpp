@@ -23,6 +23,7 @@ vector<int> dijkstra(vector<vector<pair<int, int>>> &adj, int src)
         {
             int child_node = child.first;
             int child_wt = child.second;
+            // relaxation step
             if (curr_dist + child_wt < dist[child_node])
             {
                 dist[child_node] = curr_dist + child_wt;
