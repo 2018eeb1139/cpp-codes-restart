@@ -32,7 +32,7 @@ int Solution::solve(vector<vector<int>> &mat)
 {
     int m = mat.size();
     int n = mat[0].size();
-
+    vector<vector<int>> ans; // FOR LEETCODE
     vector<vector<bool>> vis1(m, vector<bool>(n, false));
     vector<vector<bool>> vis2(m, vector<bool>(n, false));
 
@@ -67,6 +67,7 @@ int Solution::solve(vector<vector<int>> &mat)
             if (vis1[i][j] && vis2[i][j])
             {
                 ans++;
+                ans.push_back({i, j}); // for LEETCODE
             }
         }
     }
