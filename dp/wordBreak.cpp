@@ -38,3 +38,38 @@ bool wordBreak(string s, vector<string> &wordDict)
     }
     return dp[n];
 }
+// RECUR+MEMO
+unordered_set<string> st;
+int t[301];
+bool solve(int idx, int n, string s)
+{
+    if (idx >= n)
+    {
+        return true;
+    }
+    if (t[idx] != -1)
+        return t[idx];
+    if (st.find(s) != st.end())
+    {
+        return t[idx] = true;
+    }
+    for (int l = 1; l <= n; l++)
+    {
+        string temp = s.substr(idx, l);
+        if (st.find(temp) != st.end() && solve(idx + l, n, s))
+        {
+            return t[idx] = true;
+        }
+    }
+    return t[idx] = false;
+}
+bool wordBreak(string s, vector<string> &wordDict)
+{
+    int n = s.size();
+    memset(t, -1, sizeof(t));
+    for (auto &word : wordDict)
+    {
+        st.insert(word);
+    }
+    return solve(0, n, s);
+}
