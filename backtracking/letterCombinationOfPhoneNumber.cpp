@@ -36,3 +36,42 @@ vector<string> letterCombinations(string s)
     solve(s, res, 0, m);
     return ans;
 }
+
+// Interviewbit
+
+vector<string> ans;
+
+void solve(string &s, int idx, string temp, unordered_map<char, string> &m)
+{
+    if (idx == s.size())
+    {
+        ans.push_back(temp);
+        return;
+    }
+    for (char &c : m[s[idx]])
+    {
+        temp.push_back(c);
+        solve(s, idx + 1, temp, m);
+        temp.pop_back();
+    }
+}
+
+vector<string> Solution::letterCombinations(string s)
+{
+    unordered_map<char, string> m;
+    m['0'] = "0";
+    m['1'] = "1";
+    m['2'] = "abc";
+    m['3'] = "def";
+    m['4'] = "ghi";
+    m['5'] = "jkl";
+    m['6'] = "mno";
+    m['7'] = "pqrs";
+    m['8'] = "tuv";
+    m['9'] = "wxyz";
+    ans.clear();
+    string temp = "";
+    solve(s, 0, temp, m);
+
+    return ans;
+}
