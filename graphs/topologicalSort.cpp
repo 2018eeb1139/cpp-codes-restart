@@ -3,6 +3,43 @@
 #include <queue>
 using namespace std;
 
+// different parameter input
+vector<int> topoSort(int V, vector<vector<int>> &edges)
+{
+    // code here
+    vector<int> adj[V];
+    vector<int> indegree(V, 0);
+    for (auto &edge : edges)
+    {
+        int x = edge[0];
+        int y = edge[1];
+        adj[x].push_back(y);
+        indegree[y]++;
+    }
+    queue<int> q;
+    for (int i = 0; i < V; i++)
+    {
+        if (indegree[i] == 0)
+            q.push(i);
+    }
+    vector<int> ans;
+    while (!q.empty())
+    {
+        int curr_node = q.front();
+        q.pop();
+        ans.push_back(curr_node);
+        for (int &child : adj[curr_node])
+        {
+            indegree[child]--;
+            if (indegree[child] == 0)
+            {
+                q.push(child);
+            }
+        }
+    }
+    return ans;
+}
+
 vector<int> topologicalSort(vector<vector<int>> &adj)
 {
     // Your code here
