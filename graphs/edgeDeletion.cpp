@@ -47,8 +47,9 @@ const int M = 1e9 + 7;
 
 void dfs(int node, int par, vector<int> adj[], vector<int> &subtree_sum, vector<int> &val)
 {
-    subtree_sum[node] += val[node-1;
-    for(int child : adj[node]){
+    subtree_sum[node] += val[node - 1];
+    for (int child : adj[node])
+    {
         if (child != par)
         {
             dfs(child, node, adj, subtree_sum, val);
