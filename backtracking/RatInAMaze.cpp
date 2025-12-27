@@ -2,55 +2,50 @@
 #include <string>
 using namespace std;
 
-struct Choice
+class Direction
 {
-    char dname;
+public:
     int dx;
     int dy;
+    char dir;
 };
-bool isSolved(int x, int y, int n)
+vector<Direction> directions = {
+    {-1, 0, 'U'}, {1, 0, 'D'}, {0, -1, 'L'}, {0, 1, 'R'}};
+bool isValid(int i, int j, int n, vector<vector<int>> &maze)
 {
-    return (x == n - 1 && y == n - 1);
+    return (i >= 0 && j >= 0 && i < n && j < n && maze[i][j] == 1);
 }
-bool isValid(int x, int y, int n, vector<vector<int>> &arr)
+void solve(int i, int j, int n, string &path, vector<string> &res, vector<vector<int>> &maze)
 {
-    return (x >= 0 && x < n && y >= 0 && y < n && arr[x][y] == 1);
-}
-void solve(int x, int y, int n, vector<string> &res, string &path, vector<vector<int>> &arr, vector<Choice> &choices)
-{
-    if (isSolved(x, y, n))
+    if (i == n - 1 && j == n - 1)
     {
         res.push_back(path);
         return;
     }
-    for (auto &choice : choices)
+    for (auto &direction : directions)
     {
-        int newX = x + choice.dx;
-        int newY = y + choice.dy;
-        if (isValid(newX, newY, n, arr))
+        int newX = i + direction.dx;
+        int newY = j + direction.dy;
+        if (isValid(newX, newY, n, maze))
         {
-            arr[newX][newY] = 0; // mark it visited
-            path.push_back(choice.dname);
-            solve(newX, newY, n, res, path, arr, choices);
-            arr[newX][newY] = 1; // bactracking;
-            path.pop_back();     // backtracking
+            path.push_back(direction.dir);
+            maze[i][j] = 0;
+            solve(newX, newY, n, path, res, maze);
+            maze[i][j] = 1;
+            path.pop_back();
         }
     }
 }
-vector<string> findPath(vector<vector<int>> &arr)
+vector<string> ratInMaze(vector<vector<int>> &maze)
 {
     // code here
-    int n = arr.size();
+    int n = maze.size();
     vector<string> res;
-    if (n == 0 || arr[0][0] == 0)
-        return res; // Edge case handling
-    string path = "";
-    vector<Choice> choices = {
-        {'U', -1, 0},
-        {'D', 1, 0},
-        {'L', 0, -1},
-        {'R', 0, 1}};
-    arr[0][0] = 0; // Mark the starting point as visited
-    solve(0, 0, n, res, path, arr, choices);
+    if (maze[0][0] == 1)
+    {
+        string path = "";
+        solve(0, 0, n, path, res, maze);
+    }
+    sort(res.begin(), res.end());
     return res;
 }
