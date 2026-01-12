@@ -38,26 +38,36 @@ int subarraySum(vector<int> &arr, int k)
 
 // for negative numbers
 // prefix_sum + hashing hard
-int subarraySum(vector<int> &arr, int k)
+
+int longestSubarray(vector<int> &arr, int k)
 {
-    int ct = 0;
-    unordered_map<int, int> m;
-    vector<int> pf_sum(arr.size());
-    pf_sum[0] = arr[0];
-    for (int i = 1; i < arr.size(); i++)
-    {
-        pf_sum[i] = pf_sum[i - 1] + arr[i];
-    }
+    // code here
+    unordered_map<long long, int> mp; // prefixSum -> first index
+    long long sum = 0;
+    int maxLen = 0;
+
     for (int i = 0; i < arr.size(); i++)
     {
-        if (pf_sum[i] == k)
-            ct++;
+        sum += arr[i];
 
-        if (m.find(pf_sum[i] - k) != m.end())
+        // Case 1: subarray from 0 to i
+        if (sum == k)
         {
-            ct += m[pf_sum[i] - k];
+            maxLen = i + 1;
         }
-        m[pf_sum[i]]++;
+
+        // Case 2: subarray ending at i
+        if (mp.find(sum - k) != mp.end())
+        {
+            maxLen = max(maxLen, i - mp[sum - k]);
+        }
+
+        // Store first occurrence only
+        if (mp.find(sum) == mp.end())
+        {
+            mp[sum] = i;
+        }
     }
-    return ct;
+
+    return maxLen;
 }
