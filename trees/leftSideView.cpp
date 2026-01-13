@@ -10,7 +10,7 @@ void solve(TreeNode *root, int level)
     solve(root->left, level + 1);
     solve(root->right, level + 1);
 }
-vector<int> rightSideView(TreeNode *root)
+vector<int> leftSideView(TreeNode *root)
 {
     if (root == NULL)
         return {};
