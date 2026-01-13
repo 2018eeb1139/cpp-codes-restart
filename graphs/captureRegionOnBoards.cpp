@@ -74,3 +74,49 @@ void Solution::solve(vector<vector<char>> &mat)
         }
     }
 }
+
+// DFS use this
+int m, n;
+vector<pair<int, int>> directions = {
+    {-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+void dfs(int i, int j, vector<vector<char>> &mat, vector<vector<int>> &vis)
+{
+    if (i < 0 || j < 0 || i >= m || j >= n || vis[i][j] || mat[i][j] == 'X')
+        return;
+    vis[i][j] = 1;
+    for (auto &dir : directions)
+    {
+        int newX = i + dir.first;
+        int newY = j + dir.second;
+        dfs(newX, newY, mat, vis);
+    }
+}
+void solve(vector<vector<char>> &mat)
+{
+    m = mat.size();
+    n = mat[0].size();
+    vector<vector<int>> vis(m, vector<int>(n, 0));
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (i == 0 || j == 0 || i == m - 1 || j == n - 1)
+            {
+                if (mat[i][j] == 'O')
+                {
+                    dfs(i, j, mat, vis);
+                }
+            }
+        }
+    }
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (!vis[i][j] && mat[i][j] == 'O')
+            {
+                mat[i][j] = 'X';
+            }
+        }
+    }
+}
