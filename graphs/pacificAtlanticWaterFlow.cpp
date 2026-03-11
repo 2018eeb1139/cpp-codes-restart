@@ -60,6 +60,7 @@ int Solution::solve(vector<vector<int>> &mat)
     bfs(q2, mat, vis2, m, n);
 
     int ans = 0;
+
     for (int i = 0; i < m; i++)
     {
         for (int j = 0; j < n; j++)
